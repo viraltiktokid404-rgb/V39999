@@ -80,4 +80,50 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                         const { adminBot, unsendEmoji } = global.GoatBot.config;
                         if (unsendEmoji && unsendEmoji.includes(reaction) && adminBot.includes(reactorID)) {
                                 api.unsendMessage(messageID, (err) => {
-                         
+                                        if (err) {
+                                                // If error, it might not be the bot's message
+                                                // console.error("Failed to unsend message:", err);
+                                        }
+                                });
+                        }
+                }
+
+
+                onAnyEvent();
+                switch (event.type) {
+                        case "message":
+                        case "message_reply":
+                        case "message_unsend":
+                                onFirstChat();
+                                onChat();
+                                onStart();
+                                onReply();
+                                break;
+                        case "event":
+                                handlerEvent();
+                                onEvent();
+                                break;
+                        case "message_reaction":
+                                onReaction();
+                                break;
+                        case "typ":
+                                typ();
+                                break;
+                        case "presence":
+                                presence();
+                                break;
+                        case "read_receipt":
+                                read_receipt();
+                                break;
+                        // case "friend_request_received":
+                        // { /* code block */ }
+                        // break;
+
+                        // case "friend_request_cancel"
+                        // { /* code block */ }
+                        // break;
+                        default:
+                                break;
+                }
+        };
+};
