@@ -1,123 +1,154 @@
 const createFuncMessage = global.utils.message;
 const handlerCheckDB = require("./handlerCheckData.js");
 
-module.exports = (
-  api,
-  threadModel,
-  userModel,
-  dashBoardModel,
-  globalModel,
-  usersData,
-  threadsData,
-  dashBoardData,
-  globalData
-) => {
+module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, usersData, threadsData, dashBoardData, globalData) => {
+	const handlerEvents = require(process.env.NODE_ENV == 'development'
+		? "./handlerEvents.dev.js"
+		: "./handlerEvents.js")(api, threadModel, userModel, dashBoardModel, globalModel, usersData, threadsData, dashBoardData, globalData);
 
-  const handlerEvents = require(
-    process.env.NODE_ENV == "development"
-      ? "./handlerEvents.dev.js"
-      : "./handlerEvents.js"
-  )(
-    api,
-    threadModel,
-    userModel,
-    dashBoardModel,
-    globalModel,
-    usersData,
-    threadsData,
-    dashBoardData,
-    globalData
-  );
+	return async function (event) {
 
-  return async function (event) {
+		// Anti inbox
+		if (
+			global.GoatBot.config.antiInbox == true &&
+			(event.senderID == event.threadID || event.userID == event.senderID || event.isGroup == false)
+		)
+			return;
 
-    // Anti Inbox
-    if (
-      global.GoatBot.config.antiInbox == true &&
-      (event.senderID == event.threadID ||
-        event.userID == event.senderID ||
-        event.isGroup == false)
-    )
-      return;
+		const message = createFuncMessage(api, event);
 
-    const message = createFuncMessage(api, event);
+		const { body } = event;
+		const prefix = global.utils.getPrefix(event.threadID);
 
-    await handlerCheckDB(usersData, threadsData, event);
+		// AUTO SEEN
+		if (global.GoatBot.config.nix && global.GoatBot.config.nix.autoseen === true) {
+			try {
+				api.markAsRead(event.threadID);
+			} catch (e) {}
+		}
 
-    const handlerChat = await handlerEvents(event, message);
-    if (!handlerChat) return;
+		// CHECK NIXPREFIX
+		let processedBody = body;
 
-    const {
-      onAnyEvent,
-      onFirstChat,
-      onStart,
-      onChat,
-      onReply,
-      onEvent,
-      handlerEvent,
-      onReaction,
-      typ,
-      presence,
-      read_receipt,
-      command
-    } = handlerChat;
+		if (body) {
+			const bodyTrim = body.trim();
+			const splitBody = bodyTrim.split(/ +/);
+			const commandNameRaw = splitBody[0] || "";
+			const commandName = commandNameRaw.toLowerCase();
 
-    /* =======================
-       FIXED NOPREFIX SYSTEM
-    ======================== */
+			const command =
+				global.GoatBot.commands.get(commandName) ||
+				global.GoatBot.commands.get(global.GoatBot.aliases.get(commandName));
 
-    if (command && command.config && command.config.noPrefix === true) {
-      const prefix = global.GoatBot.config.prefix;
-      const body = event.body || "";
+			if (command && command.config && command.config.nixPrefix === true) {
+				processedBody = prefix + bodyTrim;
+				event.body = processedBody;
+				event.args = splitBody.slice(1);
+			}
+		}
 
-      if (!body.startsWith(prefix)) {
-        const bodyTrim = body.trim();
-        const processedBody = prefix + bodyTrim;
+		// COMMAND CHECK
+		if (processedBody && processedBody.startsWith(prefix)) {
 
-        event.body = processedBody;
-        event.args = bodyTrim.split(/ +/).slice(1);
-      }
-    }
+			const bodySlice = processedBody.slice(prefix.length).trim();
+			const splitCmd = bodySlice.split(/ +/);
 
-    /* =======================
-       MAIN HANDLER
-    ======================== */
+			const matchedCommandRaw = splitCmd[0] || "";
+			const matchedCommand = matchedCommandRaw.toLowerCase();
 
-    onAnyEvent();
+			if (
+				!matchedCommand ||
+				(!global.GoatBot.commands.has(matchedCommand) &&
+				 !global.GoatBot.aliases.has(matchedCommand))
+			) {
 
-    switch (event.type) {
-      case "message":
-      case "message_reply":
-      case "message_unsend":
-        onFirstChat();
-        onChat();
-        onStart();
-        onReply();
-        break;
+				const allCommands = Array.from(global.GoatBot.commands.keys());
 
-      case "event":
-        handlerEvent();
-        onEvent();
-        break;
+				const { closestMatch, distance } = allCommands.reduce((acc, cmd) => {
+					const dist = global.utils.levenshteinDistance(matchedCommand, cmd);
+					if (dist < acc.distance)
+						return { closestMatch: cmd, distance: dist };
+					return acc;
+				}, { closestMatch: null, distance: Infinity });
 
-      case "message_reaction":
-        onReaction();
-        break;
+				if (matchedCommand && distance <= 2) {
+					return message.reply(
+						`❌ | Command "${matchedCommandRaw}" does not exist.\n\n📜 Type ${prefix}help to see all commands\n\n💡 Did you mean: ${prefix}${closestMatch}?`
+					);
+				}
 
-      case "typ":
-        typ();
-        break;
+				return message.reply(
+					`❌ | The command you are using does not exist.\n\n📜 Type ${prefix}help to see all commands`
+				);
+			}
+		}
 
-      case "presence":
-        presence();
-        break;
+		await handlerCheckDB(usersData, threadsData, event);
 
-      case "read_receipt":
-        read_receipt();
-        break;
+		const handlerChat = await handlerEvents(event, message);
 
-      default:
-        break;
-    }
-  };
+		if (!handlerChat)
+			return;
+
+		const {
+			onAnyEvent, onFirstChat, onStart, onChat,
+			onReply, onEvent, handlerEvent, onReaction,
+			typ, presence, read_receipt
+		} = handlerChat;
+
+		// UNSEND REACTION
+		if (event.type === "message_reaction") {
+
+			const { reaction, messageID, senderID, userID } = event;
+			const reactorID = senderID || userID;
+
+			const { adminBot, unsendEmoji } = global.GoatBot.config;
+
+			if (
+				unsendEmoji &&
+				unsendEmoji.includes(reaction) &&
+				adminBot.includes(reactorID)
+			) {
+				api.unsendMessage(messageID, () => {});
+			}
+		}
+
+		onAnyEvent();
+
+		switch (event.type) {
+
+			case "message":
+			case "message_reply":
+			case "message_unsend":
+				onFirstChat();
+				onChat();
+				onStart();
+				onReply();
+				break;
+
+			case "event":
+				handlerEvent();
+				onEvent();
+				break;
+
+			case "message_reaction":
+				onReaction();
+				break;
+
+			case "typ":
+				typ();
+				break;
+
+			case "presence":
+				presence();
+				break;
+
+			case "read_receipt":
+				read_receipt();
+				break;
+
+			default:
+				break;
+		}
+	};
 };
