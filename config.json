@@ -58,7 +58,7 @@
     "whiteListThreadIds": []
   },
   "database": {
-    "type": "sqlite",
+    "type": "mongodb",
     "uriMongodb": "mongodb+srv://kumarorithi:IDOLL-ANTHONY-URI-12@cluster0.hwu7q.mongodb.net/",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true
