@@ -1,20 +1,20 @@
- {
+{
   "facebookAccount": {
     "email": "",
     "password": "",
-    "2FASecret": "238107",
+    "2FASecret": "",
     "i_user": "",
     "proxy": null,
     "userAgent": "Mozilla/5.0 (Linux; Android 12; M2102J20SG) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Mobile Safari/537.36",
     "intervalGetNewCookie": 1440,
     "notes": "time the system automatically retrieves new cookies from email/password, unit is minute, if you set null, the system will not automatically retrieve new cookies, it saves you from having to manually change your cookie every time it expires. recommended set to 1440 (1day) or 4320 (3day).TO BE ABLE TO USE THIS FEATURE YOU NEED TO ENTER THE ACCOUNT PASSWORD ABOVE"
   },
-  "antiInbox": true,
+  "antiInbox": false,
   "language": "en",
   "notesLanguage": "change to your language with ISO 639-1 code, available languages: vi (Vietnamese), en (English)",
-  "nickNameBot": "AHMED TARIF BOT",
+  "nickNameBot": "GoatBot",
   "prefix": "!",
-  "api": "http://api.noobs-api.rf.gd/dipto",
+  "api": "https://www.noobs-api.rf.gd/dipto",
   "approval": false,
   "reactBy": {
     "delete": [
@@ -31,54 +31,42 @@
     "ignoreCommand": []
   },
   "adminBot": [
+    "100081491574719",
+    "61552422054139",
     "100002652020549",
-    "61584339180654"
+    "100002632681860",
+    "1064344828932997"
   ],
   "mainAdmin": [
-    "100002652020549",
-	  "61584339180654"
+    "100002652020549"
   ],
-	"vipUser": [
+  "DEV": [
+    "61552422054139",
     "100002652020549",
-	  "61584339180654"
-    ],
-	"premiumUsers": [
-    "100002652020549",
-	  "61584339180654"
-    ],
-	"GOD": [
-     "100002652020549",
-     "61584339180654"
-        ],
-	"DEV": [
-    "100002652020549",
-    "61584339180654"
-        ],
-	"orgDEV": [
-    "100002652020549",
-    "61584339180654"
-        ],
-  "nisanBot": [
-		"28297135763266706"
-	],
+    "",
+    ""
+  ],
   "whiteListMode": {
     "enable": false,
     "whiteListIds": [
-      "100002652020549",
-      "61584339180654"
+      "61552258402755",
+      "100044327656712",
+      "1064344828932997"
     ],
     "notes": "if you enable this feature, only the ids in the whiteListIds list can use the bot"
   },
   "whiteListModeThread": {
-    "enable": true,
+    "enable": false,
     "whiteListThreadIds": [
-      "28297135763266706"
+      "1330641265235319",
+      "1064344828932997",
+      "1856060851787634"
     ],
     "notes": "if you enable this feature, only the thread in the whiteListThreadIds list can use the bot",
     "how_it_work": "if you enable both whiteListMode and whiteListModeThread, the system will check if the user is in whiteListIds, then check if the thread is in whiteListThreadIds, if one of the conditions is true, the user can use the bot"
   },
   "database": {
-    "type": "mongodb",
+    "type": "sqlite",
     "uriMongodb": "",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
@@ -87,11 +75,10 @@
   "timeZone": "Asia/Dhaka",
   "credentials": {
     "gmailAccount": {
-      "email": "andylabaco@gmail.com",
-      "clientId": "96871167660-5js0qjdlpr2mcd331kv5obpifev5j69r.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//04qK_zxJkdK7RCgYIARAAGAQSNwF-L9IrZOdI4prCgpqvAoDEvn-HpuSugKxBTRNoGS37QwxfAWJUCehSKhdas26xOh-SjmdR4uw",
-      "apiKey": ""
+      "email": "fariasdipto@gmail.com",
+      "clientId": "356551796908-109qeba7nv0e30u2c7o22gr9podqsiim.apps.googleusercontent.com",
+      "clientSecret": "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",
+      "refreshToken": "1//04otrr7tUfUAFCgYIARAAGAQSNwF-L9IrnanDeaer7kPniPX_EdWPKNnf4_z7ONCUcR5Jp6_kcSXWKAND0inf-n1Yv1LRryIKNhY"
     },
     "gRecaptcha": {
       "siteKey": "",
@@ -129,7 +116,7 @@
     "notes": "this feature will automatically load the script when scripts have been changed, you can set ignoreCmds to ignore commands, ignoreEvents to ignore events, separate by comma or space, example: \"cmd1.js cmd2.js cmd3.js\" (without backslash)"
   },
   "autoRefreshFbstate": true,
-  "autoReloginWhenChangeAccount": true,
+  "autoReloginWhenChangeAccount": false,
   "autoRestartWhenListenMqttError": false,
   "restartListenMqtt": {
     "enable": true,
@@ -183,10 +170,10 @@
     "updatePresence": true,
     "listenTyping": true,
     "logLevel": "error",
-    "selfListen": false,
+    "selfListen": true,
     "selfListenEvent": true,
     "autoMarkDelivery": false,
-    "autoReconnect": true,
+    "autoReconnect": false,
     "notes": "Document here: https://github.com/ntkhang03/fb-chat-api/blob/master/DOCS.md#apisetoptionsoptions "
   }
 }
