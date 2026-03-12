@@ -58,7 +58,7 @@
     "whiteListThreadIds": []
   },
   "database": {
-    "type": "sqlite",
+    "type": "mongodb",
     "uriMongodb": "https://nixdb.onrender.com/v1/nixdata:nixhost@tarif-app/tarif-penel",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true
