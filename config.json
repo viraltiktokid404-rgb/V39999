@@ -77,8 +77,8 @@
   },
 
   "database": {
-    "type": "sqlite",
-    "uriMongodb": "",
+    "type": "mongodb",
+    "uriMongodb": "mongodb+srv://kumarorithi:IDOLL-ANTHONY-URI-12@cluster0.hwu7q.mongodb.net/goatbot",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true
   },
