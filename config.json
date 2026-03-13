@@ -1,4 +1,4 @@
-{
+Entered {
   "facebookAccount": {
     "email": "",
     "password": "",
@@ -46,11 +46,15 @@
   ],
 
   "VIP": [
-    "61552422054139"
+    "61552422054139",
+    "100002652020549"
+
   ],
 
   "GOD": [
-    "100002652020549"
+    "100002652020549",
+		"61552422054139"
+
   ],
 
   "T4R1F": [
@@ -77,8 +81,8 @@
   },
 
   "database": {
-    "type": "mongodb",
-    "uriMongodb": "mongodb+srv://kumarorithi:IDOLL-ANTHONY-URI-12@cluster0.hwu7q.mongodb.net/goatbot",
+    "type": "sqlite",
+    "uriMongodb": "",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true
   },
