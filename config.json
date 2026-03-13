@@ -17,14 +17,8 @@
   "api": "https://www.noobs-api.rf.gd/dipto",
   "approval": false,
   "reactBy": {
-    "delete": [
-      "😡",
-      "😾"
-    ],
-    "kick": [
-      "🦶",
-      "⚠️"
-    ]
+    "delete": ["🗑️", "❌", "😠", "😡", "😾"],
+    "kick": ["👟", "🦵"]
   },
   "adminOnly": {
     "enable": false,
