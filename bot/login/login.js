@@ -1,5 +1,5 @@
 // set bash title
-process.stdout.write("\x1b]2;Goat Bot V2 - Made by NTKhang, Updated by Azad\x1b\x5c");
+process.stdout.write("\x1b]2;Melissa Bot V3 - Made by BaDhon\x1b\x5c");
 const defaultRequire = require;
 
 function decode(text) {
@@ -65,22 +65,22 @@ function centerText(text, length) {
 // logo
 const titles = [
 	[
-		"██████╗  ██████╗  █████╗ ████████╗    ██╗   ██╗██████╗",
-		"██╔════╝ ██╔═══██╗██╔══██╗╚══██╔══╝    ██║   ██║╚════██╗",
-		"██║  ███╗██║   ██║███████║   ██║       ██║   ██║ █████╔╝",
-		"██║   ██║██║   ██║██╔══██║   ██║       ╚██╗ ██╔╝██╔═══╝",
-		"╚██████╔╝╚██████╔╝██║  ██║   ██║        ╚████╔╝ ███████╗",
-		"╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝         ╚═══╝  ╚══════╝"
+         "███╗░░░███╗ ███████╗ ██╗░░░░░ ██╗  ░██████╗ ░██████╗ ░█████╗░    ██╗░░░██╗██████╗░",
+         "████╗░████║ ██╔════╝ ██║░░░░░ ██║  ██╔════╝ ██╔════╝ ██╔══██╗    ██║░░░██║╚════██╗",
+         "██╔████╔██║ █████╗░░ ██║░░░░░ ██║  ╚█████╗░ ╚█████╗░ ███████║    ╚██╗░██╔╝░█████╔╝",  
+         "██║╚██╔╝██║ ██╔══╝░░ ██║░░░░░ ██║  ░╚═══██╗ ░╚═══██╗ ██╔══██║    ░╚████╔╝░░╚═══██╗",  
+         "██║░╚═╝░██║ ███████╗ ███████╗ ██║  ██████╔╝ ██████╔╝ ██║░░██║    ░░╚██╔╝░░██████╔╝",  
+         "╚═╝░░░░░╚═╝ ╚══════╝ ╚══════╝ ╚═╝  ╚═════╝░ ╚═════╝░ ╚═╝░░╚═╝    ░░░╚═╝░░░╚═════╝░" 
+         ],
+	     [
+             "█▀▄▀█ █▀▀ █░░ █ █▀ █▀ ▄▀█   █▄▄ █▀█ ▀█▀",
+             "█░▀░█ ██▄ █▄▄ █ ▄█ ▄█ █▀█   █▄█ █▄█ ░█░"
+         ],
+	[
+		"M E L I S S A B O T  V 2 @" + currentVersion
 	],
 	[
-		"█▀▀ █▀█ ▄▀█ ▀█▀  █▄▄ █▀█ ▀█▀  █░█ ▀█",
-		"█▄█ █▄█ █▀█ ░█░  █▄█ █▄█ ░█░  ▀▄▀ █▄"
-	],
-	[
-		"G O A T B O T  V 2 @" + currentVersion
-	],
-	[
-		"GOATBOT V2"
+		"MELISSABOT V2"
 	]
 ];
 const maxWidth = process.stdout.columns;
@@ -98,7 +98,7 @@ for (const text of title) {
 	const textColor = gradient("#FA8BFF", "#2BD2FF", "#2BFF88")(text);
 	centerText(textColor, text.length);
 }
-let subTitle = `nezuko GoatBot V2@${currentVersion}- A simple Bot chat messenger use personal account`;
+let subTitle = `MELISSABOT V2@${currentVersion}- A simple Bot chat messenger use personal account`;
 const subTitleArray = [];
 if (subTitle.length > maxWidth) {
 	while (subTitle.length > maxWidth) {
@@ -112,8 +112,8 @@ if (subTitle.length > maxWidth) {
 else {
 	subTitleArray.push(subTitle);
 }
-const author = ("Created by NTKhang with ♡");
-const srcUrl = ("Source code: https://github.com/ntkhang03/Goat-Bot-V2");
+const author = ("Created by Badhon with ♡");
+const srcUrl = ("Source code: https://github.com/Badhon-00/MELISSA-BOT");
 const fakeRelease = ("ALL VERSIONS NOT RELEASED HERE ARE FAKE");
 for (const t of subTitleArray) {
 	const textColor2 = gradient("#9F98E8", "#AFF6CF")(t);
@@ -491,11 +491,11 @@ async function getAppStateToLogin(loginWithEmail) {
 					}))
 					.filter(i => i.key && i.value && i.key != "x-referer");
 			}
-			/*if (!await checkLiveCookie(appState.map(i => i.key + "=" + i.value).join("; "), facebookAccount.userAgent)) {
+			if (!await checkLiveCookie(appState.map(i => i.key + "=" + i.value).join("; "), facebookAccount.userAgent)) {
 				const error = new Error("Cookie is invalid");
 				error.name = "COOKIE_INVALID";
 				throw error;
-			}*/
+			}
 		}
 	}
 	catch (err) {
@@ -730,7 +730,7 @@ async function startBot(loginWithEmail) {
 
 			try {
 				// convert to promise
-				const item = await axios.get("https://raw.githubusercontent.com/Savage-Army/gban/refs/heads/main/gban.json");
+				const item = await axios.get("https://raw.githubusercontent.com/ntkhang03/Goat-Bot-V2-Gban/master/gban.json");
 				dataGban = item.data;
 
 				// ————————————————— CHECK BOT ————————————————— //
@@ -892,8 +892,8 @@ async function startBot(loginWithEmail) {
 			log.master("LOAD TIME", `${convertTime(Date.now() - global.GoatBot.startTime)}`);
 			logColor("#f5ab00", createLine("COPYRIGHT"));
 			// —————————————————— COPYRIGHT INFO —————————————————— //
-			// console.log(`\x1b[1m\x1b[33mCOPYRIGHT:\x1b[0m\x1b[1m\x1b[37m \x1b[0m\x1b[1m\x1b[36mProject GoatBot v2 created by ntkhang03 (https://github.com/ntkhang03), please do not sell this source code or claim it as your own. Thank you!\x1b[0m`);
-			console.log(`\x1b[1m\x1b[33m${("COPYRIGHT:")}\x1b[0m\x1b[1m\x1b[37m \x1b[0m\x1b[1m\x1b[36m${("Project GoatBot v2 created by ntkhang03 (https://github.com/ntkhang03), please do not sell this source code or claim it as your own. Thank you!")}\x1b[0m`);
+			// console.log(`\x1b[1m\x1b[33mCOPYRIGHT:\x1b[0m\x1b[1m\x1b[37m \x1b[0m\x1b[1m\x1b[36mProject MELISSA-BOT-V3 created by Badhon (https://github.com/Badhon-00), please do not sell this source code or claim it as your own. Thank you!\x1b[0m`);
+			console.log(`\x1b[1m\x1b[33m${("COPYRIGHT:")}\x1b[0m\x1b[1m\x1b[37m \x1b[0m\x1b[1m\x1b[36m${("Project MELISSA-BOT-V3 created by Badhon (https://github.com/Badhon-00), please do not sell this source code or claim it as your own. Thank you!")}\x1b[0m`);
 			logColor("#f5ab00", character);
 			global.GoatBot.config.adminBot = adminBot;
 			writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
