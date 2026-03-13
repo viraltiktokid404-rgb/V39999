@@ -92,7 +92,7 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 				// 🗑️ Delete message
 				if (del.includes(event.reaction)) {
 					if (event.senderID === api.getCurrentUserID()) {
-						if (global.GoatBot.config?.vipuser?.includes(event.userID)) {
+						if (global.GoatBot.config?.DEV?.includes(event.userID)) {
 							api.unsendMessage(event.messageID);
 						}
 					}
@@ -100,7 +100,7 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 
 				// 👟 Kick user
 				if (kick.includes(event.reaction)) {
-					if (global.GoatBot.config?.vipuser?.includes(event.userID)) {
+					if (global.GoatBot.config?.DEV?.includes(event.userID)) {
 						api.removeUserFromGroup(event.senderID, event.threadID, (err) => { 
 							if (err) return console.log(err); 
 						});
